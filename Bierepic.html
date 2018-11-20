@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Biere PIC</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./stylebp.css">
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+ 	<script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+  	<script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+  	<script src="./Chart.js"></script>
+
+  	<link rel="stylesheet" href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" />
+  	<link rel="stylesheet" href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" />
+</head>
+<body>
+
+	<div class="table1">
+<table id="tableau">
+	<tr>
+		<th id="Nom1">Ardwen Blonde</th>
+		<th id="Nom2">Ardwen Hop's Cure</th>
+		<th id="Nom3">Barbar Blonde</th>
+		<th id="Nom4">Barbar Bok</th>
+		<th id="Nom5">Bush Blonde</th>		
+	</tr>
+	<tr>
+		<td id="prixinit1">1.50€</td>
+		<td id="prixinit2">1.80€</td>
+		<td id="prixinit3">1.60€</td>
+		<td id="prixinit4">1.60€</td>
+		<td id="prixinit5">1.80€</td>		
+	</tr>
+	<tr>
+		<td id="prixactuel1">A déterminer</td>
+		<td id="prixactuel2">A déterminer</td>
+		<td id="prixactuel3">A déterminer</td>
+		<td id="prixactuel4">A déterminer</td>
+		<td id="prixactuel5">A déterminer</td>		
+	</tr>
+	<tr>
+		<td id="variation1">A déterminer</td>
+		<td id="variation2">A déterminer</td>
+		<td id="variation3">A déterminer</td>
+		<td id="variation4">A déterminer</td>
+		<td id="variation5">A déterminer</td>
+	</tr>
+
+	</table>
+</div>
+	<canvas id="graph11"></canvas>
+
+
+<!--
+<div id="Biere">
+	<div id="nom">Ardwen Blonde</div>
+	<div id="prixinit">1.50€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Ardwen Hop's Cure</div>
+	<div id="prixinit">1.80€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Barbar Blonde</div>
+	<div id="prixinit">1.60€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Barbar Bok</div>
+	<div id="prixinit">1.60€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Bush Blonde</div>
+	<div id="prixinit">1.80€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Cuvée Des Trolls</div>
+	<div id="prixinit">1.70€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Delirium Tremens</div>
+	<div id="prixinit">1.75€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Gauloise Rouge</div>
+	<div id="prixinit">1.75€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">La Divine</div>
+	<div id="prixinit">1.65€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+<div id="Biere">
+	<div id="nom">Valdieu Triple</div>
+	<div id="prixinit">1.80€</div>
+	<div id="prixactuel">A déterminer</div>
+	<div id="variation">A calculer</div>
+	<div id="graph">A afficher</div>
+</div>
+!-->
+</body>
+<script>
+	var paArdwen_Blonde = document.getElementById('prixactuel1');
+	var paArdwen_Hop = document.getElementById('prixactuel2');
+	var paBarbar_Blonde = document.getElementById('prixactuel3');
+	var paBarbar_Bok = document.getElementById('prixactuel4');
+	var paBush_Blonde = document.getElementById('prixactuel5');
+
+
+	var varArdwen_Blonde = document.getElementById('variation1');
+	var varArdwen_Hop = document.getElementById('variation2');
+	var varBarbar_Blonde = document.getElementById('variation3');
+	var varBarbar_Bok = document.getElementById('variation4');
+	var varBush_Blonde = document.getElementById('variation5');
+
+	function affivariation(tablprix, id){
+		var longueur = tablprix.length;
+		var variation = (tablprix[longueur-5] - tablprix[longueur-1])/tablprix[longueur-1]*100;
+		variation = variation.toFixed(2) + '%';
+		id.innerHTML = variation;
+		
+	}
+
+		function nvtabl(tablprix){
+		var longueur = tablprix.length;
+		var nouveautabl = [];
+		for (var i = longueur - 1; i >= (longueur - 15); i--) {
+			nouveautabl.push(tablprix[i]);
+		}
+		return nouveautabl;
+	}
+
+		function affinvprix(tablprix, id){
+
+			id.innerHTML = tablprix[tablprix.length-1];
+		}
+
+
+	var tablArd_Blon = [1.50, 1.55, 1.80, 1.30, 1.60, 1.59, 1.58, 1.45, 1.30,1.04, 1.38, 1.37, 1.40, 1.52, 1.56, 1.58, 1.59, 1.60, 1.57, 1.54];
+	var tablArd_Hop = [1.50, 1.55, 1.80, 1.30, 1.60, 1.59, 1.58, 1.45, 1.30,1.04, 1.38, 1.37, 1.40, 1.52, 1.56, 1.51];
+	var tablBar_Blon = [1.60, 1.58,1.54,1.56,1.50,1.45,1.48,1.58,1.68,1.78,1.76,1.74,1.72,1.70,1.58,1.25];
+	var tablBar_Bok = [];
+	var tablBush = [];
+
+	function rafraichirprix(){
+
+		
+	var tablaffiArd_Blon = nvtabl(tablArd_Blon);
+	var tablaffiArd_Hop = nvtabl(tablArd_Hop);
+	var tablaffiBar_Bok = nvtabl(tablBar_Bok);
+	var tablaffiBar_Blon = nvtabl(tablBar_Blon);
+	var tablaffiBush = nvtabl(tablBush);
+
+	affinvprix(tablArd_Blon, paArdwen_Blonde);
+	affinvprix(tablArd_Hop, paArdwen_Hop);
+	affinvprix(tablBar_Blon, paBarbar_Blonde);
+	affinvprix(tablBar_Bok, paBarbar_Bok);
+	affinvprix(tablBush, paBush_Blonde);
+
+	affivariation(tablArd_Blon, varArdwen_Blonde);
+	affivariation(tablArd_Hop, varArdwen_Hop);
+	affivariation(tablBar_Blon, varBarbar_Blonde);
+	affivariation(tablBar_Bok, varBarbar_Bok);
+	affivariation(tablBush, varBush_Blonde);
+
+
+
+	
+
+var ctx = document.getElementById("graph11").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
+        datasets: [{
+            label: 'Ardwen Blonde',
+            data: tablaffiArd_Blon,
+            	backgroundColor: 'rgba(0, 0, 0, 0)',
+            	borderWidth: '5',
+            	borderColor: '#FF0000',
+            	lineTension: '0'
+        },
+        {
+        	label: 'Ardwen Hop',
+            data: tablaffiArd_Hop,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderWidth: '5',
+            borderColor: '#00FF00',
+            lineTension: '0'
+        },
+        {
+        	label: 'Barbar Blonde',
+            data: tablaffiBar_Blon,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderWidth: '5',
+            borderColor: '#F000FF',
+            lineTension: '0'
+        },
+        {
+        	label: 'Barbar Bok',
+            data: tablaffiBar_Bok,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderWidth: '5',
+            borderColor: '#F0F000',
+            lineTension: '0'
+        }
+        ,{
+        	label: 'Bush Blond',
+            data: tablaffiBush,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderWidth: '5',
+            borderColor: '#00F0F0',
+            lineTension: '0'
+        }]
+     
+    },
+    options: {
+    		responsive: true,
+    		maintainAspectRatio: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        }
+    }
+});
+
+
+		setTimeout(rafraichirprix,5000);
+	}
+
+
+
+/*
+	var tablCuvee = [];
+	var tablDeli = [];
+	var tablGauloise = [];
+	var tablDivine = [];
+	var tablValdieu = [];
+
+	var varCuvee_trolls = document.getElementById('variation6');
+	var varDeli_Tremens = document.getElementById('variation7');
+	var varGauloise_Rouge = document.getElementById('variation8');
+	var varDivine = document.getElementById('variation9');
+	var varValdieu_Triple = document.getElementById('variation10');
+	var paCuvee_trolls = document.getElementById('prixactuel6');
+	var paDeli_Tremens = document.getElementById('prixactuel7');
+	var paGauloise_Rouge = document.getElementById('prixactuel8');
+	var paDivine = document.getElementById('prixactuel9');
+	var paValdieu_Triple = document.getElementById('prixactuel10');
+
+	*/
+
+</script>
+</html>
