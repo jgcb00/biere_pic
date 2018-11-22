@@ -1,0 +1,49 @@
+html
+{
+	background-color: #131325 ;
+	color:white;
+	font-family: "Roboto Slab", serif;
+	font-size: 1.5rem;
+}
+h1
+{
+	font-size: 2.5rem;
+	text-align: center;
+
+
+}
+#part1{
+	display: flex;
+	flex-wrap: nowrap;
+    justify-content: space-around;
+}
+#table1{
+	width: 40%;
+	flex: 1;
+}
+#graph1{
+	width: 60%;
+	flex:2;
+}
+table{
+	border: medium solid #F6012A;
+	border-color: #F6012A;
+	width: 100%;
+	border-collapse: collapse;
+	margin: auto;
+
+}
+tr{	border: thin solid #F6012A;
+	margin:5px;
+
+}
+th{
+	
+	text-align: left;
+}
+canvas{
+	height: 500px !important;
+	width: 100% !important;
+	margin: auto;
+	
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tableau des prix</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./stylebp.css">
+</head>
+<body>
+<table>
+	<tr id="0"></tr>
+	<tr id="1"></tr>
+	<tr id="2"></tr>
+	<tr id="3"></tr>
+	<tr id="4"></tr>
+	<tr id="5"></tr>
+	<tr id="6"></tr>
+	<tr id="7"></tr>
+	<tr id="8"></tr>
+	<tr id="9"></tr>
+	<tr id="10"></tr>
+	<tr id="11"></tr>
+	<tr id="12"></tr>
+	<tr id="13"></tr>
+	<tr id="14"></tr>
+	<tr id="15"></tr>
+	<tr id="16"></tr>
+	<tr id="17"></tr>
+	<tr id="18"></tr>
+
+</table>
+<script type="text/javascript">
+	/*
+	type biere = [nom, prix initial, nouveau prix, variation]
+	recevoir le nouveau prix
+	calculer la variation
+
+	ordonnées biere par prix
+	affiché les bières dans l'ordre (tableau contenant le tableau avec les bières)
+
+	*/
+
+	/* Definitions des bières :) */
+	var A_B = ['Ardwen Blonde', 1.50, 1.51, 0.0];
+	var A_H = ['Ardwen Hops Cure (triple)', 1.80, 1.85, 0.0];
+	var B_Bl = ['Barbar Blonde', 1.60, 1.58, 0.0];
+	var B_B = ['Barbar Bok', 1.60, 1.50, 0.0];
+	var C_D_T = ['Cuvée Des Trolls', 1.7, 1.50, 0.0];
+	var D_T = ['Delirium Tremens', 1.75, 1.50, 0.0];
+	var G_R = ['Gauloise Rouge', 1.75, 1.50, 0.0];
+	var L_D = ['La Divine', 1.65, 1.50, 0.0];
+	var V_T = ['Valdieu Triple', 1.8, 1.50, 0.0];
+	var C_T = ['Carolus Triple', 1.75, 1.50, 0.0];
+	var C_B = ['Chimay Bleue', 1.8, 1.50, 0.0];
+	var C_L_R = ['Cidre Loic Raison', 1.10, 1.50, 0.0];
+	var D = ['Duvel', 1.65, 1.50, 0.0];
+	var G_C = ['Grand Cru St Feuillien',1.95, 1.50, 0.0];
+	var P_M_B = ['Pêche Mel Bush', 1.8, 1.50, 0.0];
+	var R8 = ['Rochefort 8', 1.95, 1.50, 0.0];
+	var S_B = ['Silly Blanche', 1.0, 1.50, 0.0];
+	var W_T = ['Westmalle Triple', 1.75, 1.50, 0.0];
+	
+	function calculervar(prix){
+	var variation = (prix[2] - prix[1])/prix[1]*100;
+	variation = variation.toFixed(2);
+	console.log(variation);
+	prix.splice(3, 1 , variation);
+	return prix;
+	}
+
+	function rangerparordre(biere1, biere2, biere3, biere4, biere5, biere6, biere7, biere8, biere9, biere10, biere11, biere12, biere13, biere14, biere15, biere16, biere17, biere18){
+		var tablglobal = [biere1, biere2, biere3, biere5, biere6, biere7, biere8, biere9, biere10, biere11, biere12, biere13, biere14, biere15, biere16, biere17, biere18];
+		tablglobal.sort(function(a,b){return a[2]-b[2];});
+		console.log(tablglobal);
+		return tablglobal;
+	}
+
+	function afficherprix(ordre)
+	{
+		for (var i = 0; i <= ordre.length - 1; i++) {
+			var biere = ordre[i];
+			var text = '<th>'+biere[0]+'</th><td>'+biere[1]+'</td><td>'+biere[2];
+			if (biere[3] >= 0) {
+				text= text +'</td><td>+'+biere[3]+'%</td><td><img src="./green_arrow.jpg" width="30" height="30" /></td>';
+			}else{
+				text= text +'</td><td>'+biere[3]+'%</td><td><img src="./red_arrow.jpg" width="30" height="30"/></td>';
+			}
+			console.log(text);
+			document.getElementById(i).innerHTML = text;
+		}
+	}
+
+var A_B = calculervar(A_B);
+var A_H = calculervar(A_H);
+var B_Bl = calculervar(B_Bl);
+var B_B = calculervar(B_B);
+var C_D_T = calculervar(C_D_T);
+var D_T = calculervar(D_T);
+var G_R = calculervar(G_R);
+var L_D = calculervar(L_D);
+var V_T = calculervar(V_T);
+var C_T = calculervar(C_T);
+var C_B = calculervar(C_B);
+var C_L_R = calculervar(C_L_R);
+var D = calculervar(D);
+var G_C = calculervar(G_C);
+var P_M_B = calculervar(P_M_B);
+var R8 = calculervar(R8);
+var S_B = calculervar(S_B);
+var W_T = calculervar(W_T);
+
+
+var tablglobal = rangerparordre(A_H, A_B, B_Bl, B_B, C_D_T, D_T, G_R, L_D, V_T, C_T, C_B, C_L_R, D, G_C, P_M_B, R8, S_B, W_T);
+afficherprix(tablglobal);
+</script>
+
+</body>
+</html>
