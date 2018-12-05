@@ -54,8 +54,9 @@
 	function nvprix(message){
 		var touteslesbiere =[];
 		for (var i = 0; i <= 0; i++) {
-			
-		biere = [message[i]['name'],message[i]['oldprice'],message[i]['price'], 0];
+		var vieuxprix = message[i]['oldprice']/100;
+		var nouveauprix = message[i]['price']/100
+		biere = [message[i]['name'],vieuxprix, nouveauprix, 0];
 		biere = calculervar(biere);
 		touteslesbiere.push(biere);
 	}
