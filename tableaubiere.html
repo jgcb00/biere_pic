@@ -28,6 +28,9 @@
 	<tr id="18"></tr>
 
 </table>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script> !-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 	/*
 	type biere = [nom, prix initial, nouveau prix, variation]
@@ -39,8 +42,71 @@
 
 	*/
 
-	/* Definitions des bières :) */
-	var A_B = ['Ardwen Blonde', 1.50, 1.51, 0.0];
+	
+	function calculervar(prix){
+	var variation = (prix[2] - prix[1])/prix[1]*100;
+	variation = variation.toFixed(2);
+	console.log(variation);
+	prix.splice(3, 1 , variation);
+	return prix;
+	}
+
+	function nvprix(message){
+		var touteslesbiere =[];
+		for (var i = 0; i <= 0; i++) {
+			
+		biere = [message[i]['name'],message[i]['oldprice'],message[i]['price'], 0];
+		biere = calculervar(biere);
+		touteslesbiere.push(biere);
+	}
+	touteslesbiere.sort(function(a,b){return a[2]-b[2];});
+	return touteslesbiere
+}
+
+
+	function afficherprix(ordre)
+	{
+		for (var i = 0; i <= ordre.length - 1; i++) {
+			var biere = ordre[i];
+			var text = '<th>'+biere[0]+'</th><td>'+biere[1]+'</td><td>'+biere[2];
+			if (biere[3] >= 0) {
+				text= text +'</td><td>+'+biere[3]+'%</td><td><img src="./green_arrow.jpg" width="30" height="30" /></td>';
+			}else{
+				text= text +'</td><td>'+biere[3]+'%</td><td><img src="./red_arrow.jpg" width="30" height="30"/></td>';
+			}
+			console.log(text);
+			document.getElementById(i).innerHTML = text;
+		}
+	}
+
+
+
+function requete(){
+
+       $.get(
+    'http://wallstreet.crichard.fr/api/beers', // Le fichier cible côté serveur.
+    'false', // Nous utilisons false, pour dire que nous n'envoyons pas de données.
+    'miseajourprix', // Nous renseignons uniquement le nom de la fonction de retour.
+    'json' // Format des données reçues.
+);
+
+function miseajourprix(texte_recu){
+	reponse = JSON.parse(texte_recu);
+
+	console.log('requete effectué')
+	console.log(texte_reçu);
+	tablglobal = nvprix(reponse);
+	afficherprix(tablglobal);
+}
+
+}
+       setInterval(requete,1000);
+   
+
+
+      /* 
+
+			var A_B = ['Ardwen Blonde', 1.50, 1.51, 0.0];
 	var A_H = ['Ardwen Hops Cure (triple)', 1.80, 1.85, 0.0];
 	var B_Bl = ['Barbar Blonde', 1.60, 1.58, 0.0];
 	var B_B = ['Barbar Bok', 1.60, 1.50, 0.0];
@@ -58,59 +124,64 @@
 	var R8 = ['Rochefort 8', 1.95, 1.50, 0.0];
 	var S_B = ['Silly Blanche', 1.0, 1.50, 0.0];
 	var W_T = ['Westmalle Triple', 1.75, 1.50, 0.0];
-	
-	function calculervar(prix){
-	var variation = (prix[2] - prix[1])/prix[1]*100;
-	variation = variation.toFixed(2);
-	console.log(variation);
-	prix.splice(3, 1 , variation);
-	return prix;
-	}
 
-	function rangerparordre(biere1, biere2, biere3, biere4, biere5, biere6, biere7, biere8, biere9, biere10, biere11, biere12, biere13, biere14, biere15, biere16, biere17, biere18){
+		function rangerparordre(biere1, biere2, biere3, biere4, biere5, biere6, biere7, biere8, biere9, biere10, biere11, biere12, biere13, biere14, biere15, biere16, biere17, biere18){
 		var tablglobal = [biere1, biere2, biere3, biere5, biere6, biere7, biere8, biere9, biere10, biere11, biere12, biere13, biere14, biere15, biere16, biere17, biere18];
 		tablglobal.sort(function(a,b){return a[2]-b[2];});
 		console.log(tablglobal);
 		return tablglobal;
 	}
 
-	function afficherprix(ordre)
-	{
-		for (var i = 0; i <= ordre.length - 1; i++) {
-			var biere = ordre[i];
-			var text = '<th>'+biere[0]+'</th><td>'+biere[1]+'</td><td>'+biere[2];
-			if (biere[3] >= 0) {
-				text= text +'</td><td>+'+biere[3]+'%</td><td><img src="./green_arrow.jpg" width="30" height="30" /></td>';
-			}else{
-				text= text +'</td><td>'+biere[3]+'%</td><td><img src="./red_arrow.jpg" width="30" height="30"/></td>';
-			}
-			console.log(text);
-			document.getElementById(i).innerHTML = text;
-		}
+		function calcul_toutes_les_var(){
+		var A_B = calculervar(A_B);
+		var A_H = calculervar(A_H);
+		var B_Bl = calculervar(B_Bl);
+		var B_B = calculervar(B_B);
+		var C_D_T = calculervar(C_D_T);
+		var D_T = calculervar(D_T);
+		var G_R = calculervar(G_R);
+		var L_D = calculervar(L_D);
+		var V_T = calculervar(V_T);
+		var C_T = calculervar(C_T);
+		var C_B = calculervar(C_B);
+		var C_L_R = calculervar(C_L_R);
+		var D = calculervar(D);
+		var G_C = calculervar(G_C);
+		var P_M_B = calculervar(P_M_B);
+		var R8 = calculervar(R8);
+		var S_B = calculervar(S_B);
+		var W_T = calculervar(W_T);
 	}
 
-var A_B = calculervar(A_B);
-var A_H = calculervar(A_H);
-var B_Bl = calculervar(B_Bl);
-var B_B = calculervar(B_B);
-var C_D_T = calculervar(C_D_T);
-var D_T = calculervar(D_T);
-var G_R = calculervar(G_R);
-var L_D = calculervar(L_D);
-var V_T = calculervar(V_T);
-var C_T = calculervar(C_T);
-var C_B = calculervar(C_B);
-var C_L_R = calculervar(C_L_R);
-var D = calculervar(D);
-var G_C = calculervar(G_C);
-var P_M_B = calculervar(P_M_B);
-var R8 = calculervar(R8);
-var S_B = calculervar(S_B);
-var W_T = calculervar(W_T);
 
 
-var tablglobal = rangerparordre(A_H, A_B, B_Bl, B_B, C_D_T, D_T, G_R, L_D, V_T, C_T, C_B, C_L_R, D, G_C, P_M_B, R8, S_B, W_T);
-afficherprix(tablglobal);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      console.log(message);
+       //calcul des prix
+       calcul_toutes_les_var();
+       var tablglobal = rangerparordre(A_H, A_B, B_Bl, B_B, C_D_T, D_T, G_R, L_D, V_T, C_T, C_B, C_L_R, D, G_C, P_M_B, R8, S_B, W_T);
+		afficherprix(tablglobal); */
+
+
+
+
+
+
 </script>
 
 </body>
